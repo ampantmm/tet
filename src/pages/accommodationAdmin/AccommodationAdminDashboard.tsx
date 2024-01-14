@@ -17,6 +17,7 @@ import routes from "../../constants/routes.ts";
 import Card from "../../components/Card.tsx";
 import { useGetAccommodations } from "../../hooks/useGetAccommodations.ts";
 import { useDeleteAccommodationMutation } from "../../hooks/useDeleteAccommodation.ts";
+import AddEditAccommodationModal from "../../components/AddEditAccommodationModal.tsx";
 
 const AccommodationAdminDashboardPage = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -49,6 +50,18 @@ const AccommodationAdminDashboardPage = () => {
 
     return (
         <SidebarLayout className='bg-blue-50'>
+            <AddEditAccommodationModal
+                isOpen={isOpen}
+                onClose={onClose}
+            />
+            <div className='w-full flex justify-end'>
+                <Card className='w-min mb-6'>
+                    <Button
+                        colorScheme='whatsapp'
+                        onClick={onOpen}
+                    >Add accommodation</Button>
+                </Card>
+            </div>
 
             <Card>
                 <Skeleton isLoaded={!isLoading}>

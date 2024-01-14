@@ -30,8 +30,8 @@ export type Accommodation = {
   id: string,
   accommodationType: string,
   address: string,
-  availabilityStart: Date,
-  availabilityEnd: Date,
+  availabilityStart: string,
+  availabilityEnd: string,
   latitude: string,
   longitude: string,
 }

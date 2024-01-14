@@ -1,13 +1,16 @@
 import { useParams } from 'react-router-dom'
 import Card from '../../components/Card'
 import SidebarLayout from '../../components/SidebarLayout'
-import {Button, Flex, Skeleton, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react'
+import {Button, Flex, Skeleton, Table, TableContainer, Tbody, Td, Th, Thead, Tr, useDisclosure} from '@chakra-ui/react'
 import {useGetAccommodationDetails} from "../../hooks/useGetAccommodationDetails.ts";
 import {MapContainer, Marker, Popup, TileLayer, useMap} from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import {LatLngExpression} from "leaflet";
+import AddEditAccommodationModal from "../../components/AddEditAccommodationModal.tsx";
 
 const AccommodationDetailsPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
   const { id } = useParams<{ id: string }>()
 
   const { data, error, isLoading } = useGetAccommodationDetails(id || '')
@@ -18,9 +21,17 @@ const AccommodationDetailsPage = () => {
         <Card>{error ? error.message : 'Data for accommodation not available'}</Card>
       ) : (
         <>
+          <AddEditAccommodationModal
+              accommodation={data}
+              isOpen={isOpen}
+              onClose={onClose}
+          />
           <div className='w-full flex justify-end'>
             <Card className='w-min mb-6'>
-              <Button colorScheme='whatsapp'>Edit accommodation</Button>
+              <Button
+                  colorScheme='whatsapp'
+                  onClick={onOpen}
+              >Edit accommodation</Button>
             </Card>
           </div>
           <Card>
